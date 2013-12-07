@@ -1,5 +1,7 @@
 Tlog::Application.routes.draw do
 
+  resources :logs
+
   resources :projects
 
   root 'projects#index'
