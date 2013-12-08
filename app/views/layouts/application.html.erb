@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%= content_for?(:title) ? yield(:title) : "Tlog" %></title>
+    <title><%= content_for?(:title) ? yield(:title) : "tLog" %></title>
     <%= csrf_meta_tags %>
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
@@ -38,7 +38,7 @@
   </head>
   <body>
 
-    <div class="navbar navbar-default" role="navigation">
+    <nav class="navbar navbar-default" role="navigation">
       <!-- Brand and toggle get grouped for better mobile display -->
       <div class="navbar-header">
         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
@@ -51,10 +51,13 @@
       </div>
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav">
-          <li><%= link_to "My Projects", projects_path  %></li>
+          <li class="active"><%= link_to "My Projects", projects_path  %></li>
         </ul>
+        <% if user_signed_in? %>
+          <p class="navbar-text pull-right">Signed in as <strong><%= current_user.email %></strong>. Not you? <%= link_to 'Sign out', destroy_user_session_path, :method => 'delete' %></p>
+        <% end%>
       </div>
-    </div>
+    </nav>
 
     <div class="container">
       <div class="row">
@@ -69,7 +72,9 @@
           </div><
         </div> -->
         <div class="col-xs-12">
-          <%= bootstrap_flash %>
+          <% if current_page?(user_registration_path) %>
+            <%= bootstrap_flash %>
+          <% end %>
           <%= yield %>
         </div>
       </div><!--/row-->

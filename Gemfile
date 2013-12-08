@@ -51,3 +51,4 @@ end
 #gem 'twitter-bootstrap-rails', github: 'seyhunak/twitter-bootstrap-rails', branch: 'bootstrap3'
 gem 'twitter-bootstrap-rails', github: 'jenrzzz/twitter-bootstrap-rails', branch: 'bootstrap3'
 
+gem 'devise'

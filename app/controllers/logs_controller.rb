@@ -73,6 +73,6 @@ class LogsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def log_params
-      params.require(:log).permit(:start, :finish, :comment, :project_id)
+      params.require(:log).permit(:start, :finish, :comment)
     end
 end
