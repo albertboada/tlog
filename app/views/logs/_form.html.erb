@@ -1,30 +1,22 @@
-<%= form_for @log, :html => { :class => 'form-horizontal' } do |f| %>
-  <div class="control-group">
-    <%= f.label :start, :class => 'control-label' %>
-    <div class="controls">
-      <%= f.datetime_select :start, :class => 'text_field' %>
-    </div>
+<%= form_for @log, :html => { :class => '' } do |f| %>
+  <div class="form-group">
+    <%= f.label :start, :class => '' %>
+    <%= f.datetime_select :start, :class => 'form-control text_field' %>
   </div>
-  <div class="control-group">
-    <%= f.label :finish, :class => 'control-label' %>
-    <div class="controls">
-      <%= f.datetime_select :finish, :class => 'text_field' %>
-    </div>
+  <div class="form-group">
+    <%= f.label :finish, :class => '' %>
+    <%= f.datetime_select :finish, :class => 'form-control text_field' %>
   </div>
-  <div class="control-group">
-    <%= f.label :comment, :class => 'control-label' %>
-    <div class="controls">
-      <%= f.text_area :comment, :class => 'text_field' %>
-    </div>
+  <div class="form-group">
+    <%= f.label :comment, :class => '' %>
+    <%= f.text_area :comment, :class => 'form-control text_field' %>
   </div>
-  <!-- <div class="control-group">
-    <%= f.label :project_id, :class => 'control-label' %>
-    <div class="controls">
-      <%= f.text_field :project_id, :class => 'text_field' %>
-    </div>
+  <!-- <div class="form-group">
+    <%= f.label :project_id, :class => '' %>
+    <%= f.text_field :project_id, :class => 'text_field' %>
   </div> -->
 
-  <div class="form-actions">
+  <div class="">
     <%= f.submit nil, :class => 'btn btn-primary' %>
     <% if @log.id %>
       <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
