@@ -1,39 +1,43 @@
 class LogsController < ApplicationController
-  before_action :set_log, only: [:show, :edit, :update, :destroy]
-
-  # GET /logs
-  # GET /logs.json
-  def index
-    @logs = Log.all
-  end
+  before_action :set_log, only: [:show, :edit, :update, :destroy, :stop]
 
   # GET /logs/1
   # GET /logs/1.json
   def show
   end
 
-  # GET /logs/new
-  def new
-    @log = Log.new
-  end
-
   # GET /logs/1/edit
   def edit
   end
 
-  # POST /logs
-  # POST /logs.json
+  # POST /logs/:project_id
   def create
-    @log = Log.new(log_params)
+    project = Project.find(params[:id])
+
+    log = Log.new
+    log.project = project
+    log.start   = Time.now
+
+    respond_to do |format|
+      if log.save
+        notice = 'Log was successfully created.'
+      else
+        notice = 'Log was not successfully created.'
+      end
+      format.html { redirect_to project, notice: notice }
+    end
+  end
+
+  def stop
+    @log.finish = Time.now
 
     respond_to do |format|
       if @log.save
-        format.html { redirect_to @log, notice: 'Log was successfully created.' }
-        format.json { render action: 'show', status: :created, location: @log }
+        notice = 'Log was successfully stoped.'
       else
-        format.html { render action: 'new' }
-        format.json { render json: @log.errors, status: :unprocessable_entity }
+        notice = 'Log was not successfully stoped.'
       end
+      format.html { redirect_to @log.project, notice: notice }
     end
   end
 
@@ -42,7 +46,7 @@ class LogsController < ApplicationController
   def update
     respond_to do |format|
       if @log.update(log_params)
-        format.html { redirect_to @log, notice: 'Log was successfully updated.' }
+        format.html { redirect_to @log.project, notice: 'Log was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }
@@ -56,7 +60,7 @@ class LogsController < ApplicationController
   def destroy
     @log.destroy
     respond_to do |format|
-      format.html { redirect_to logs_url }
+      format.html { redirect_to @log.project }
       format.json { head :no_content }
     end
   end

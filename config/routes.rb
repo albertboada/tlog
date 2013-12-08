@@ -1,10 +1,14 @@
 Tlog::Application.routes.draw do
 
-  resources :logs
+  root 'projects#index'
 
   resources :projects
 
-  root 'projects#index'
+  resources :logs, :except => :create
+  post 'logs/:id' => 'logs#create'
+
+  post 'logs/:id/stop' => 'logs#stop', as: :stop_log
+
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

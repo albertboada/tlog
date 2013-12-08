@@ -26,7 +26,9 @@
 
   <div class="form-actions">
     <%= f.submit nil, :class => 'btn btn-primary' %>
-    <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
-                logs_path, :class => 'btn' %>
+    <% if @log.id %>
+      <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+                  project_path(@log.project), :class => 'btn' %>
+    <% end %>
   </div>
 <% end %>
