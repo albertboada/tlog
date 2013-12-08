@@ -13,20 +13,25 @@
   <dd><%= @project.user_id %></dd>
 </dl> -->
 
-<h3 style="margin-bottom: 25px;">Total spent time in this project: <span class="label label-warning"><%= @project.spent '%hours%h %minutes%m %seconds%s' %></span></h3>
+<h3 style="margin-bottom: 25px;">Total spent time in this project: <span class="label label-info"><%= @project.spent '%hours%h %minutes%m %seconds%s' %></span></h3>
 
-<% if @project.currentlog %>
-<!--   <h3>Current log:</h3>
-  <dl class="dl-horizontal">
-    <dt>Start:</dt><dd><%= @project.currentlog.start %></dd>
-    <dt>Spent:</dt><dd><%= @project.currentlog.spent '%hours%h %minutes%m %seconds%s' %></dd>
-  </dl> -->
-<% else %>
-  <div class="jumbotron">
-    <p>You are currently <strong>not</strong> logging this project</p>
-    <%= link_to 'Start logging!', log_path(@project), :method => 'post', :class => 'btn btn-success btn-lg' %>
-  </div>
-<% end %>
+<div class="jumbotron">
+  <% if @project.currentlog %>
+  <!--   <h3>Current log:</h3>
+    <dl class="dl-horizontal">
+      <dt>Start:</dt><dd><%= @project.currentlog.start %></dd>
+      <dt>Spent:</dt><dd><%= @project.currentlog.spent '%hours%h %minutes%m %seconds%s' %></dd>
+    </dl> -->
+    <p>You <strong>are</strong> currently logging this project</p>
+    <%#= link_to 'Stop logging!', log_path(@project), :method => 'post', :class => 'btn btn-success btn-lg' %>
+    <%= link_to 'I\'m done logging for now!!', stop_log_path(@project.currentlog), :method => 'post',
+              :data => { :confirm => 'Are you sure?' },
+              :class => 'btn btn-warning btn-lg' %>
+  <% else %>
+      <p>You are currently <strong>not</strong> logging this project</p>
+      <%= link_to 'Start logging!', log_path(@project), :method => 'post', :class => 'btn btn-success btn-lg' %>
+  <% end %>
+</div>
 
 <h3>Time Logs</h3>
 <div class="table-responsive">
