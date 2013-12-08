@@ -19,7 +19,7 @@
       <% @projects.each do |project| %>
         <tr>
           <!-- <td><%= link_to project.id, project_path(project) %></td> -->
-          <td><strong><%= project.name %></strong></td>
+          <td><strong><%= link_to project.name, project %></strong></td>
           <td><%= project.description %></td>
           <td><%= project.user_id %></td>
           <td><%= project.spent '%hours%h %minutes%m %seconds%s' %></td>

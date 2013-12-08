@@ -23,7 +23,7 @@
   </dl> -->
 <% else %>
   <div class="jumbotron">
-    <p>You are currently not logging</p>
+    <p>You are currently <strong>not</strong> logging this project</p>
     <%= link_to 'Start logging!', log_path(@project), :method => 'post', :class => 'btn btn-success btn-lg' %>
   </div>
 <% end %>
