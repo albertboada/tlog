@@ -13,7 +13,7 @@
   <dd><%= @project.user_id %></dd>
 </dl> -->
 
-<h3>Total spent time in this project: <%= @project.spent '%hours%h %minutes%m %seconds%s' %></h3>
+<h3 style="margin-bottom: 25px;">Total spent time in this project: <span class="label label-warning"><%= @project.spent '%hours%h %minutes%m %seconds%s' %></span></h3>
 
 <% if @project.currentlog %>
 <!--   <h3>Current log:</h3>
@@ -21,61 +21,64 @@
     <dt>Start:</dt><dd><%= @project.currentlog.start %></dd>
     <dt>Spent:</dt><dd><%= @project.currentlog.spent '%hours%h %minutes%m %seconds%s' %></dd>
   </dl> -->
-
 <% else %>
-  <div class="hero-unit">
+  <div class="jumbotron">
     <p>You are currently not logging</p>
-    <%= link_to 'Start logging!', log_path(@project), :method => 'post', :class => 'btn btn-success btn-large' %>
+    <%= link_to 'Start logging!', log_path(@project), :method => 'post', :class => 'btn btn-success btn-lg' %>
   </div>
 <% end %>
 
 <h3>Time Logs</h3>
-<table class="table">
-  <thead>
-    <tr>
-      <th>#</th>
-      <th>Start</th>
-      <th>Finish</th>
-      <th>Comment</th>
-      <th>Spent time</th>
-      <th>Actions</th>
-    </tr>
-  </thead>
-  <% @project.logs.reverse.each_with_index do |log, i| %>
-    <tr <%= !log.finish ? 'class=current' : '' %>>
-      <td><%= i + 1 %></td>
-      <td><%= log.start %></td>
-      <td>
-        <% if log.finish %>
-          <%= log.finish %>
-        <% else %>
-          -
-        <% end %>
-      </td>
-      <td><%= log.comment %></td>
-      <td>
-        <%= log.spent '%hours%h %minutes%m %seconds%s' %>
-      </td>
-      <td>
-        <% if log.finish %>
-          <%= link_to t('.edit', :default => t("helpers.links.edit")),
-                edit_log_path(log), :class => 'btn btn-mini'
-          %>
-          <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
-                log_path(log),
-                :method => :delete,
-                :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
-                :class => 'btn btn-mini btn-danger'
-          %>
-        <% else %>
-          <%= link_to 'I\'m done!!', stop_log_path(@project.currentlog), :method => 'post',
-            :data => { :confirm => 'Are you sure?' },
-            :class => 'btn btn-warning' %>
-        <% end %>
-      </td>
-    </tr>
-  <% end %>
-</table>
+<div class="table-responsive">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Start</th>
+        <th>Finish</th>
+        <th>Comment</th>
+        <th>Spent time</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <% @project.logs.reverse.each_with_index do |log, i| %>
+      <tr <%= !log.finish ? 'class=current' : '' %>>
+        <td><%= i + 1 %></td>
+        <td><%= log.start %></td>
+        <td>
+          <% if log.finish %>
+            <%= log.finish %>
+          <% else %>
+            -
+          <% end %>
+        </td>
+        <td><%= log.comment %></td>
+        <td>
+          <%= log.spent '%hours%h %minutes%m %seconds%s' %>
+        </td>
+        <td>
+          <% if log.finish %>
+            <div class="btn-group btn-group-sm">
+              <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                    edit_log_path(log), :class => 'btn btn-sm btn-default'
+              %>
+              <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+                    log_path(log),
+                    :method => :delete,
+                    :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+                    :class => 'btn btn-sm btn-danger'
+              %>
+            </div>
+          <% else %>
+            <%= link_to 'I\'m done!!', stop_log_path(@project.currentlog), :method => 'post',
+              :data => { :confirm => 'Are you sure?' },
+              :class => 'btn btn-warning' %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+</div>
 
 <!-- <div class="form-actions">
   <%= link_to t('.back', :default => t("helpers.links.back")),

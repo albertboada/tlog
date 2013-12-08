@@ -1,5 +1,21 @@
 .table tr td {
-  vertical-align: middle;
+  vertical-align: middle !important;
+}
+
+.table thead tr th {
+  white-space: nowrap;
+}
+
+.btn-group {
+  white-space: nowrap;
+}
+
+.navbar {
+  border-radius: 0 !important;
+}
+
+.btn-group .btn {
+  float: none;
 }
 
 .current td {
