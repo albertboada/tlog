@@ -37,7 +37,7 @@ class LogsController < ApplicationController
 
     respond_to do |format|
       if @log.save
-        notice = 'Log was successfully stopped.'
+        notice = 'Log was successfully started.'
       else
         notice = 'Log was not successfully stopped.'
       end
