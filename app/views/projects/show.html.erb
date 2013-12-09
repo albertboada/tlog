@@ -48,7 +48,7 @@
     </thead>
     <% @project.logs.reverse.each_with_index do |log, i| %>
       <tr <%= !log.finish ? 'class=current' : '' %>>
-        <td><%= i + 1 %></td>
+        <td><%= @project.logs.size - i %></td>
         <td><%=l log.start %></td>
         <td>
           <% if log.finish %>
