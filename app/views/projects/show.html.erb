@@ -39,27 +39,27 @@
     <thead>
       <tr>
         <th>#</th>
-        <th>Start</th>
-        <th>Finish</th>
-        <th>Comment</th>
         <th>Spent time</th>
+        <th>Start</th>
+        <th>Comment</th>
+        <th>Finish</th>
         <th>Actions</th>
       </tr>
     </thead>
     <% @project.logs.reverse.each_with_index do |log, i| %>
       <tr <%= !log.finish ? 'class=current' : '' %>>
         <td><%= @project.logs.size - i %></td>
-        <td><%=l log.start %></td>
+        <td>
+          <%= log.spent '%hours%h %minutes%m %seconds%s' %>
+        </td>
+        <td><%=l log.start, format: :withsecs %></td>
+        <td><%= log.comment %></td>
         <td>
           <% if log.finish %>
-            <%=l log.finish %>
+            <%=l log.finish, format: :withsecs %>
           <% else %>
             -
           <% end %>
-        </td>
-        <td><%= log.comment %></td>
-        <td>
-          <%= log.spent '%hours%h %minutes%m %seconds%s' %>
         </td>
         <td>
           <% if log.finish %>
