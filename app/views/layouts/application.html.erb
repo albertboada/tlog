@@ -72,7 +72,7 @@
           </div><
         </div> -->
         <div class="col-xs-12">
-          <% if current_page?(user_registration_path) %>
+          <% if params[:controller] != 'devise/registrations' || params[:action] != 'create' %>
             <%= bootstrap_flash %>
           <% end %>
           <%= yield %>
