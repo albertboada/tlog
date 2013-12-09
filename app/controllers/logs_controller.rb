@@ -24,9 +24,9 @@ class LogsController < ApplicationController
 
     respond_to do |format|
       if log.save
-        notice = 'Log was successfully created.'
+        notice = 'Log was successfully started.'
       else
-        notice = 'Log was not successfully created.'
+        notice = 'Log was not successfully started.'
       end
       format.html { redirect_to project, notice: notice }
     end
@@ -37,7 +37,7 @@ class LogsController < ApplicationController
 
     respond_to do |format|
       if @log.save
-        notice = 'Log was successfully started.'
+        notice = 'Log was successfully stopped.'
       else
         notice = 'Log was not successfully stopped.'
       end
