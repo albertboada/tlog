@@ -14,6 +14,10 @@ class LogsController < ApplicationController
   def create
     project = Project.find(params[:id])
 
+    if project.user != current_user
+      render :status => :forbidden, :text => "Forbidden"
+    end
+
     log = Log.new
     log.project = project
     log.start   = Time.now
@@ -69,6 +73,10 @@ class LogsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_log
       @log = Log.find(params[:id])
+
+      if @log.project.user != current_user
+        render :status => :forbidden, :text => "Forbidden"
+      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
