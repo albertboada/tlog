@@ -54,7 +54,7 @@
           <li class="active"><%= link_to "My Projects", projects_path  %></li>
         </ul>
         <% if user_signed_in? %>
-          <p class="navbar-text pull-right">Signed in as <strong><%= current_user.email %></strong>. Not you? <%= link_to 'Sign out', destroy_user_session_path, :method => 'delete' %></p>
+          <p class="navbar-text pull-right">Signed in as <strong><%= link_to current_user.email, edit_user_registration_path %></strong>. Not you? <%= link_to 'Sign out', destroy_user_session_path, :method => 'delete' %></p>
         <% end%>
       </div>
     </nav>
