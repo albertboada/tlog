@@ -1,6 +1,8 @@
 class Project < ActiveRecord::Base
+  default_scope :order => 'id ASC'
+
   belongs_to :user
-  has_many :logs
+  has_many :logs#, :order => 'id ASC'
 
   def spent(format = nil)
     spent = 0;

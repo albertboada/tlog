@@ -1,4 +1,6 @@
 class Log < ActiveRecord::Base
+  default_scope :order => 'id ASC'
+
   belongs_to :project
 
   def spent(format = nil)
