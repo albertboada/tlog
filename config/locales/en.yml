@@ -23,7 +23,7 @@ en:
   hello: "Hello world"
   date:
     formats:
-      default: "%d/%m/%Y"
+      default: "%a, %d/%m/%Y"
   time:
     formats:
-      default: "%d/%m/%Y %H:%M:%S"
+      default: "%a, %d/%m/%Y, %H:%M:%S"
