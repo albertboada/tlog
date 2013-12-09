@@ -13,7 +13,7 @@ class Log < ActiveRecord::Base
     puts 'Finish'
     puts finish.to_s
 
-    seconds_diff = (start - finish).to_i.abs
+    seconds_diff = (finish - start).to_f.abs.round
 
     if format
       self.class.format_timediff(seconds_diff, format)

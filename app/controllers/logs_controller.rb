@@ -20,7 +20,7 @@ class LogsController < ApplicationController
 
     log = Log.new
     log.project = project
-    log.start   = Time.now
+    log.start   = Time.now.change(:usec => 0)
 
     respond_to do |format|
       if log.save
@@ -33,7 +33,7 @@ class LogsController < ApplicationController
   end
 
   def stop
-    @log.finish = Time.now
+    @log.finish = Time.now.change(:usec => 0)
 
     respond_to do |format|
       if @log.save
