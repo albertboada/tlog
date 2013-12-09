@@ -1,21 +1,11 @@
-.table tr td {
-  vertical-align: middle !important;
-}
+.table {
+  tr td {
+    vertical-align: middle !important;
+  }
 
-.table thead tr th {
-  white-space: nowrap;
-}
-
-.btn-group {
-  white-space: nowrap;
-}
-
-.navbar {
-  border-radius: 0 !important;
-}
-
-.btn-group .btn {
-  float: none;
+  thead tr th {
+    white-space: nowrap;
+  }
 }
 
 .current td {
@@ -23,6 +13,19 @@
   font-size: 18px;
 }
 
+.navbar {
+  border-radius: 0 !important;
+}
+
+// Make btn-group `btn`s non-collapsable
+.btn-group {
+  white-space: nowrap;
+  font-size: 0;
+
+  .btn { float: none; }
+}
+
+// Make normal `btn` responsive to wrapper width decrement
 .btn {
   white-space: normal !important;
 }
