@@ -13,7 +13,7 @@
   <dd><%= @project.user_id %></dd>
 </dl> -->
 
-<h3 style="margin-bottom: 25px;">Total spent time in this project: <span class="label label-info"><%= @project.spent '%hours%h %minutes%m %seconds%s' %></span><% if @project.currentlog %> <small>and counting!</small><% end %></h3>
+<h3 style="margin-bottom: 25px; line-height: 30px;">Total spent time in this project: <span class="label label-info"><%= @project.spent '%hours%h %minutes%m %seconds%s' %></span><% if @project.currentlog %> <small>and counting!<% end %></h3>
 
 <div class="jumbotron">
   <% if @project.currentlog %>
