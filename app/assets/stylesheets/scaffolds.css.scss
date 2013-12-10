@@ -30,6 +30,45 @@
   white-space: normal !important;
 }
 
+// Make table-responsive cells wrap
+.table-responsive > .table {
+  &> thead,
+  &> tbody,
+  &> tfoot {
+    //&> tr > th,
+    &> tr > td {
+      white-space: normal;
+    }
+  }
+}
+
+.table td.important {
+  a {
+    font-size: 16px;
+    font-weight: bold;
+  }
+  small {
+    display: block;
+    color: rgb(153, 153, 153);
+  }
+}
+
+#projects-table td.important {
+  min-width: 170px;
+}
+
+.table .center {
+  text-align: center;
+}
+
+.nowrap {
+  white-space: nowrap !important;
+
+  .btn {
+    white-space: nowrap !important;
+  }
+}
+
 /* body {
   background-color: #fff;
   color: #333;

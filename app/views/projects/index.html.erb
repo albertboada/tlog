@@ -3,32 +3,48 @@
   <h1><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>
 </div>
 <div class="table-responsive">
-  <table class="table">
+  <table id="projects-table" class="table">
     <thead>
       <tr>
-        <!-- <th><%= model_class.human_attribute_name(:id) %></th> -->
-        <th><%= model_class.human_attribute_name(:name) %></th>
-        <th><%= model_class.human_attribute_name(:description) %></th>
-        <th><%= model_class.human_attribute_name(:spent) %></th>
-        <th><%= model_class.human_attribute_name(:created_at) %></th>
-        <th><%=t '.actions', :default => t("helpers.actions") %></th>
+        <th></th>
+        <th><%= model_class.human_attribute_name(:project) %></th>
+        <th class=""><%= model_class.human_attribute_name(:spent_time) %></th>
+        <th class="hidden-xs"><%= model_class.human_attribute_name(:created_at) %></th>
+        <th class="center"><%=t '.actions', :default => t("helpers.actions") %></th>
       </tr>
     </thead>
     <tbody>
       <% current_user.projects.each do |project| %>
-        <tr>
+        <tr <%= project.currentlog ? 'class=warning' : '' %>>
+          <td class="center nowrap">
+            <% if project.currentlog %>
+              <%= link_to raw('<span class="glyphicon glyphicon-stop"></span>'),
+                stop_log_path(project.currentlog), :method => 'post',
+                :data => { :confirm => 'Are you sure?' },
+                :class => 'btn btn-warning btn-xs'
+              %>
+            <% else %>
+              <%= link_to raw('<span class="glyphicon glyphicon-play"></span>'),
+                log_path(project), :method => 'post',
+                :class => 'btn btn-success btn-xs'
+              %>
+            <% end %>
+          </td>
           <!-- <td><%= link_to project.id, project_path(project) %></td> -->
-          <td><strong><%= link_to project.name, project %></strong></td>
-          <td><%= project.description %></td>
-          <td><%= project.spent '%hours%h %minutes%m %seconds%s' %></td>
-          <td><%=l project.created_at %></td>
-          <td>
+          <td class="important">
+            <%= link_to project.name, project %>
+            <small><%= project.description %></small>
+          </td>
+          <td class="nowrap">
+            <%#= link_to raw('<strong>'+project.spent('%hours%h %minutes%m %seconds%s')+'</strong>'), project_path(project), :class => 'btn btn-default btn-md' %>
+            <strong><%= project.spent('%hours%h %minutes%m %seconds%s') %></strong>
+          </td>
+          <td class="hidden-xs"><%=l project.created_at %></td>
+          <td class="center nowrap">
             <div class="btn-group btn-group-sm">
-              <%= link_to 'See logs!', project_path(project), :class => 'btn btn-info' %>
-              <%= link_to t('.edit', :default => t("helpers.links.edit"))+' Project',
-                          edit_project_path(project), :class => 'btn btn-default' %>
-              <%= link_to t('.destroy', :default => t("helpers.links.destroy"))+' Project',
-                          project_path(project),
+              <%= link_to raw('<span class="glyphicon glyphicon-zoom-in"></span>'), project_path(project), :class => 'btn btn-default' %>
+              <%= link_to raw('<span class="glyphicon glyphicon-pencil"></span>'), edit_project_path(project), :class => 'btn btn-default' %>
+              <%= link_to raw('<span class="glyphicon glyphicon-remove"></span>'), project_path(project),
                           :method => :delete,
                           :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
                           :class => 'btn btn-danger' %>

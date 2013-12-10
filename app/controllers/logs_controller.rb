@@ -28,7 +28,7 @@ class LogsController < ApplicationController
       else
         notice = 'Log was not successfully started.'
       end
-      format.html { redirect_to project, notice: notice }
+      format.html { redirect_to request.referrer, notice: notice }
     end
   end
 
@@ -41,7 +41,7 @@ class LogsController < ApplicationController
       else
         notice = 'Log was not successfully stopped.'
       end
-      format.html { redirect_to @log.project, notice: notice }
+      format.html { redirect_to request.referrer, notice: notice }
     end
   end
 
