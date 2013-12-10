@@ -1,98 +1,101 @@
 <%- model_class = Project -%>
+
+<%= link_to raw('<span class="glyphicon glyphicon-arrow-left"></span> Back to My Projects'),
+  projects_path,
+  :class => 'btn btn-default visible-xs'
+%>
+
 <div class="page-header">
-  <!-- <h1><%=t '.title', :default => model_class.model_name.human.titleize %></h1> -->
-  <h1><%= @project.name %> <small><%= @project.description %></small></h1>
+  <h1>
+    <%= @project.name %>
+    <small><%= @project.description %></small>
+  </h1>
 </div>
 
-<!-- <dl class="dl-horizontal">
-  <dt><strong><%= model_class.human_attribute_name(:name) %>:</strong></dt>
-  <dd><%= @project.name %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:description) %>:</strong></dt>
-  <dd><%= @project.description %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:user_id) %>:</strong></dt>
-  <dd><%= @project.user_id %></dd>
-</dl> -->
+<div class="epic-display"><%= raw(@project.spent '%hours%<small>h</small> %minutes%<small>m</small> %seconds%<small>s</small>') %></div>
 
-<h3 style="margin-bottom: 25px; line-height: 30px;">Total spent time in this project: <span class="label label-info"><%= @project.spent '%hours%h %minutes%m %seconds%s' %></span><% if @project.currentlog %> <small>and counting!</small><% end %></h3>
+<!-- <h3 style="margin-bottom: 25px; line-height: 30px;">Total spent time in this project: <span class="label label-info"><%= @project.spent '%hours%h %minutes%m %seconds%s' %></span><% if @project.currentlog %> <small>and counting!</small><% end %></h3> -->
 
-<div class="jumbotron">
-  <% if @project.currentlog %>
-  <!--   <h3>Current log:</h3>
-    <dl class="dl-horizontal">
-      <dt>Start:</dt><dd><%= @project.currentlog.start %></dd>
-      <dt>Spent:</dt><dd><%= @project.currentlog.spent '%hours%h %minutes%m %seconds%s' %></dd>
-    </dl> -->
-    <p>You <strong>are</strong> currently logging this project</p>
-    <%#= link_to 'Stop logging!', log_path(@project), :method => 'post', :class => 'btn btn-success btn-lg' %>
-    <%= link_to 'I\'m done logging for now!!', stop_log_path(@project.currentlog), :method => 'post',
-              :data => { :confirm => 'Are you sure?' },
-              :class => 'btn btn-warning btn-lg' %>
-  <% else %>
-      <p>You are currently <strong>not</strong> logging this project</p>
-      <%= link_to 'Start logging!', log_path(@project), :method => 'post', :class => 'btn btn-success btn-lg' %>
-  <% end %>
+<% if @project.currentlog %>
+  <%= link_to raw('<span class="glyphicon glyphicon-pause"></span><br />Stop logging, for now!!'),
+    stop_log_path(@project.currentlog), :method => 'post',
+    :data => { :confirm => 'This action will STOP logging time for project:'+"\n"+@project.name+'.'+"\n\n"+' Are you sure?' },
+    :class => 'btn btn-warning btn-epic'
+  %>
+<% else %>
+  <%= link_to raw('<span class="glyphicon glyphicon-play"></span><br />Start logging now!'),
+    log_path(@project), :method => 'post',
+    :data => { :confirm => 'This action will START logging time for project:'+"\n"+@project.name+'.'+"\n\n"+' Are you sure?' },
+    :class => 'btn btn-success btn-epic'
+  %>
+<% end %>
+
+<div id="log-history">
+  <h3>Log history</h3>
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
+        <tr>
+          <th class="center">#</th>
+          <th>Log period</th>
+          <th>Spent time</th>
+          <th>Comment</th>
+          <th class="center">Actions</th>
+        </tr>
+      </thead>
+      <% @project.logs.reverse.each_with_index do |log, i| %>
+        <tr <%= !log.finish ? 'class=warning' : '' %>>
+          <td class="center"><%= @project.logs.size - i %></td>
+          <td class="nowrap log-period">
+            <% if !log.finish %>
+              <div><%=l log.start, format: "%a, %d %b %Y" %></div>
+              <div><small>From:</small> <%=l log.start, format: "%H:%M:%S" %> - <small>To:</small> ?
+            <% else %>
+              <% if log.start.to_date == log.finish.to_date %>
+                <div><%=l log.start, format: "%a, %d %b %Y" %></div>
+                <div><small>From:</small> <%=l log.start, format: "%H:%M:%S" %> - <small>To:</small> <%=l log.finish, format: '%H:%M:%S' %></div>
+              <% else %>
+                <% if log.start.year != log.finish.year %>
+                  <div><small>From:</small> <%=l log.start, format: :withsecs %></div>
+                  <div><small>To:</small> <%=l log.finish, format: :withsecs %></div>
+                <% elsif log.start.month != log.finish.month %>
+                  <div><small>From:</small> <%=l log.start, format: :withsecs %></div>
+                  <div><small>To:</small> <%=l log.finish, format: "%a, %d %b, %H:%M:%S" %></div>
+                <% else %>
+                  <div><small>From:</small> <%=l log.start, format: :withsecs %></div>
+                  <div><small>To:</small> <%=l log.finish, format: "%a, %d, %H:%M:%S" %></div>
+                <% end %>
+              <% end %>
+            <% end %>
+          </td>
+          <td class="nowrap">
+            <%= log.spent '%hours%h %minutes%m %seconds%s' %>
+          </td>
+          <td><%= log.comment %></td>
+          <td class="center">
+            <% if log.finish %>
+              <div class="btn-group btn-group-sm">
+                <%= link_to raw('<span class="glyphicon glyphicon-pencil"></span>'),
+                      edit_log_path(log),
+                      :class => 'btn btn-default',
+                      :title => t('.edit', :default => t("helpers.links.edit"))
+                %>
+                <%= link_to raw('<span class="glyphicon glyphicon-remove"></span>'),
+                      log_path(log),
+                      :method => :delete,
+                      :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+                      :class => 'btn btn-danger',
+                      :title => t('.destroy', :default => t("helpers.links.destroy"))
+                %>
+              </div>
+            <% else %>
+              <%= link_to 'I\'m done!!', stop_log_path(@project.currentlog), :method => 'post',
+                :data => { :confirm => 'This action will STOP logging time for project:'+"\n"+@project.name+'.'+"\n\n"+' Are you sure?' },
+                :class => 'btn btn-warning' %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </table>
+  </div>
 </div>
-
-<h3>Time Logs</h3>
-<div class="table-responsive">
-  <table class="table">
-    <thead>
-      <tr>
-        <th>#</th>
-        <th>Spent time</th>
-        <th>Start</th>
-        <th>Comment</th>
-        <th>Finish</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <% @project.logs.reverse.each_with_index do |log, i| %>
-      <tr <%= !log.finish ? 'class=current' : '' %>>
-        <td><%= @project.logs.size - i %></td>
-        <td>
-          <%= log.spent '%hours%h %minutes%m %seconds%s' %>
-        </td>
-        <td><%=l log.start, format: :withsecs %></td>
-        <td><%= log.comment %></td>
-        <td>
-          <% if log.finish %>
-            <%=l log.finish, format: :withsecs %>
-          <% else %>
-            -
-          <% end %>
-        </td>
-        <td>
-          <% if log.finish %>
-            <div class="btn-group btn-group-sm">
-              <%= link_to t('.edit', :default => t("helpers.links.edit")),
-                    edit_log_path(log), :class => 'btn btn-default'
-              %>
-              <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
-                    log_path(log),
-                    :method => :delete,
-                    :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
-                    :class => 'btn btn-danger'
-              %>
-            </div>
-          <% else %>
-            <%= link_to 'I\'m done!!', stop_log_path(@project.currentlog), :method => 'post',
-              :data => { :confirm => 'Are you sure?' },
-              :class => 'btn btn-warning' %>
-          <% end %>
-        </td>
-      </tr>
-    <% end %>
-  </table>
-</div>
-
-<!-- <div class="form-actions">
-  <%= link_to t('.back', :default => t("helpers.links.back")),
-              projects_path, :class => 'btn'  %>
-  <%= link_to t('.edit', :default => t("helpers.links.edit")),
-              edit_project_path(@project), :class => 'btn' %>
-  <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
-              project_path(@project),
-              :method => 'delete',
-              :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
-              :class => 'btn btn-danger' %>
-</div> -->

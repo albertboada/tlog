@@ -18,15 +18,18 @@
         <tr <%= project.currentlog ? 'class=warning' : '' %>>
           <td class="center nowrap">
             <% if project.currentlog %>
-              <%= link_to raw('<span class="glyphicon glyphicon-stop"></span>'),
+              <%= link_to raw('<span class="glyphicon glyphicon-pause"></span>'),
                 stop_log_path(project.currentlog), :method => 'post',
-                :data => { :confirm => 'Are you sure?' },
-                :class => 'btn btn-warning btn-xs'
+                :data => { :confirm => 'This action will STOP logging time for project:'+"\n"+project.name+'.'+"\n\n"+' Are you sure?' },
+                :class => 'btn btn-warning btn-xs',
+                :title => 'Stop logging'
               %>
             <% else %>
               <%= link_to raw('<span class="glyphicon glyphicon-play"></span>'),
                 log_path(project), :method => 'post',
-                :class => 'btn btn-success btn-xs'
+                :data => { :confirm => 'This action will START logging time for project:'+"\n"+project.name+'.'+"\n\n"+' Are you sure?' },
+                :class => 'btn btn-success btn-xs',
+                :title => 'Start logging'
               %>
             <% end %>
           </td>
@@ -42,12 +45,20 @@
           <td class="hidden-xs"><%=l project.created_at %></td>
           <td class="center nowrap">
             <div class="btn-group btn-group-sm">
-              <%= link_to raw('<span class="glyphicon glyphicon-zoom-in"></span>'), project_path(project), :class => 'btn btn-default' %>
-              <%= link_to raw('<span class="glyphicon glyphicon-pencil"></span>'), edit_project_path(project), :class => 'btn btn-default' %>
-              <%= link_to raw('<span class="glyphicon glyphicon-remove"></span>'), project_path(project),
-                          :method => :delete,
-                          :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
-                          :class => 'btn btn-danger' %>
+              <%= link_to raw('<span class="glyphicon glyphicon-zoom-in"></span>'), project_path(project),
+                :class => 'btn btn-default',
+                :title => 'Show Project'
+              %>
+              <%= link_to raw('<span class="glyphicon glyphicon-pencil"></span>'), edit_project_path(project),
+                :class => 'btn btn-default',
+                :title => t('.edit', :default => t("helpers.links.edit"))+' Project'
+              %>
+              <%= link_to raw('<span class="glyphicon glyphicon-remove"></span>'),
+                project_path(project), :method => :delete,
+                :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+                :class => 'btn btn-danger',
+                :title => t('.destroy', :default => t("helpers.links.destroy"))+' Project'
+              %>
             </div>
           </td>
         </tr>

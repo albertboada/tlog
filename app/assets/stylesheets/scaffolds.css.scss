@@ -1,3 +1,5 @@
+$gray_color: rgb(153, 153, 153);
+
 .table {
   tr td {
     vertical-align: middle !important;
@@ -6,11 +8,6 @@
   thead tr th {
     white-space: nowrap;
   }
-}
-
-.current td {
-  background-color: rgb(255, 250, 216);
-  font-size: 18px;
 }
 
 .navbar {
@@ -45,16 +42,27 @@
 .table td.important {
   a {
     font-size: 16px;
-    font-weight: bold;
+    //font-weight: bold;
   }
   small {
+    color: $gray_color;
     display: block;
-    color: rgb(153, 153, 153);
   }
 }
 
 #projects-table td.important {
   min-width: 170px;
+}
+
+#log-history {
+  margin-top: 50px;
+
+  .log-period small {
+    // display: inline-block;
+    // width: 35px;
+    color: $gray_color;
+  }
+
 }
 
 .table .center {
@@ -67,6 +75,38 @@
   .btn {
     white-space: nowrap !important;
   }
+}
+
+.page-header {
+  margin-top: 30px;
+
+  h1 small {
+    margin-top: 2px;
+    display: block;
+    line-height: 1.2;
+  }
+}
+
+.epic-display {
+  text-align: center;
+  font-size: 50px;
+  margin: 20px 0;
+
+  small {
+    font-size: 60%;
+    //color: $gray_color;
+  }
+}
+
+.btn-epic {
+  display: block;
+  width: 100%;
+  font-size: 30px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  text-transform: uppercase;
+  font-weight: bold;
+  margin: 20px 0;
 }
 
 /* body {

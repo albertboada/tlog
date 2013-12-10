@@ -53,7 +53,7 @@
       <% if user_signed_in? %>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav">
-            <li class="active"><%= link_to "My Projects", projects_path  %></li>
+            <li <%= current_page?(projects_path) ? 'class=active' : '' %>><%= link_to "My Projects", projects_path  %></li>
           </ul>
             <p class="navbar-text pull-right">Signed in as <strong><%= link_to current_user.email, edit_user_registration_path %></strong>. Not you? <%= link_to 'Sign out', destroy_user_session_path, :method => 'delete' %></p>
         </div>
