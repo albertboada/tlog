@@ -1,4 +1,4 @@
-tlog
+tLog
 ====
 
 Just another time logger web-application for your personal projects, built with simplicity in mind. Made with Ruby on Rails, Bootstrap 3, Devise, and a little bit of fun.
