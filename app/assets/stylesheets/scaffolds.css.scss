@@ -54,6 +54,10 @@ $gray_color: rgb(153, 153, 153);
   min-width: 170px;
 }
 
+#logs-table td.important {
+  min-width: 200px;
+}
+
 #log-history {
   margin-top: 50px;
 
