@@ -19,7 +19,7 @@
 <% if @project.currentlog %>
   <%= link_to raw('<span class="glyphicon glyphicon-pause"></span><br />Stop logging, for now!!'),
     stop_log_path(@project.currentlog), :method => 'post',
-    #:data => { :confirm => 'This action will STOP logging time for project:'+"\n"+@project.name+'.'+"\n\n"+' Are you sure?' },
+    :data => { :confirm => 'This action will STOP logging time for project:'+"\n"+@project.name+'.'+"\n\n"+' Are you sure?' },
     :class => 'btn btn-warning btn-epic'
   %>
 <% else %>
@@ -33,7 +33,7 @@
 <div id="log-history">
   <h3>Log history</h3>
   <div class="table-responsive">
-    <table class="table">
+    <table id="logs-table" class="table">
       <thead>
         <tr>
           <th class="center">#</th>
@@ -71,7 +71,7 @@
           <td class="nowrap">
             <%= log.spent '%hours%h %minutes%m %seconds%s' %>
           </td>
-          <td><%= log.comment %></td>
+          <td class="important"><%= log.comment %></td>
           <td class="center">
             <% if log.finish %>
               <div class="btn-group btn-group-sm">
@@ -90,7 +90,7 @@
               </div>
             <% else %>
               <%= link_to 'I\'m done!!', stop_log_path(@project.currentlog), :method => 'post',
-                #:data => { :confirm => 'This action will STOP logging time for project:'+"\n"+@project.name+'.'+"\n\n"+' Are you sure?' },
+                :data => { :confirm => 'This action will STOP logging time for project:'+"\n"+@project.name+'.'+"\n\n"+' Are you sure?' },
                 :class => 'btn btn-warning' %>
             <% end %>
           </td>

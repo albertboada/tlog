@@ -20,7 +20,7 @@
             <% if project.currentlog %>
               <%= link_to raw('<span class="glyphicon glyphicon-pause"></span>'),
                 stop_log_path(project.currentlog), :method => 'post',
-                #:data => { :confirm => 'This action will STOP logging time for project:'+"\n"+project.name+'.'+"\n\n"+' Are you sure?' },
+                :data => { :confirm => 'This action will STOP logging time for project:'+"\n"+project.name+'.'+"\n\n"+' Are you sure?' },
                 :class => 'btn btn-warning btn-xs',
                 :title => 'Stop logging'
               %>
