@@ -12,14 +12,16 @@
   </h1>
 </div>
 
-<div class="epic-display"><%= raw(@project.spent '%hours%<small>h</small> %minutes%<small>m</small> %seconds%<small>s</small>') %></div>
+<div class="epic-display" <% if @project.currentlog %>data-counter="<%= @project.spent %>"<% end %>>
+  <%= raw(@project.spent '%hours%<small>h</small> %minutes%<small>m</small> %seconds%<small>s</small>') %>
+</div>
 
 <!-- <h3 style="margin-bottom: 25px; line-height: 30px;">Total spent time in this project: <span class="label label-info"><%= @project.spent '%hours%h %minutes%m %seconds%s' %></span><% if @project.currentlog %> <small>and counting!</small><% end %></h3> -->
 
 <% if @project.currentlog %>
   <%= link_to raw('<span class="glyphicon glyphicon-pause"></span><br />Stop logging, for now!!'),
     stop_log_path(@project.currentlog), :method => 'post',
-    :data => { :confirm => 'This action will STOP logging time for project:'+"\n"+@project.name+'.'+"\n\n"+' Are you sure?' },
+    :data => { :confirm => 'This action will STOP logging time for project:'+"\n"+@project.name+"\n\n"+' Are you sure?' },
     :class => 'btn btn-warning btn-epic'
   %>
 <% else %>
@@ -68,7 +70,7 @@
               <% end %>
             <% end %>
           </td>
-          <td class="nowrap">
+          <td class="nowrap"<% if @project.currentlog == log %> data-counter="<%= log.spent %>"<%end %>>
             <%= log.spent '%hours%h %minutes%m %seconds%s' %>
           </td>
           <td class="important"><%= log.comment %></td>

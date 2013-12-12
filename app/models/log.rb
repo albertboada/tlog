@@ -33,9 +33,9 @@ class Log < ActiveRecord::Base
 
     seconds = seconds_diff
 
-    format.gsub! '%hours%', hours.to_s
-    format.gsub! '%minutes%', minutes.to_s
-    format.gsub! '%seconds%', seconds.to_s
+    format.gsub! '%hours%', hours.to_s.rjust(2, '0')
+    format.gsub! '%minutes%', minutes.to_s.rjust(2, '0')
+    format.gsub! '%seconds%', seconds.to_s.rjust(2, '0')
   end
 
 end

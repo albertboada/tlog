@@ -59,3 +59,5 @@ gem "less-rails" #Sprockets (what Rails 3.1 uses for its asset pipeline) support
 gem 'twitter-bootstrap-rails', github: 'jenrzzz/twitter-bootstrap-rails', branch: 'bootstrap3'
 
 gem 'devise'
+
+gem 'jquery-rails'

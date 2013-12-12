@@ -20,7 +20,7 @@
             <% if project.currentlog %>
               <%= link_to raw('<span class="glyphicon glyphicon-pause"></span>'),
                 stop_log_path(project.currentlog), :method => 'post',
-                :data => { :confirm => 'This action will STOP logging time for project:'+"\n"+project.name+'.'+"\n\n"+' Are you sure?' },
+                :data => { :confirm => 'This action will STOP logging time for project:'+"\n"+project.name+"\n\n"+' Are you sure?' },
                 :class => 'btn btn-warning btn-xs',
                 :title => 'Stop logging'
               %>
@@ -40,7 +40,7 @@
           </td>
           <td class="nowrap">
             <%#= link_to raw('<strong>'+project.spent('%hours%h %minutes%m %seconds%s')+'</strong>'), project_path(project), :class => 'btn btn-default btn-md' %>
-            <strong><%= project.spent('%hours%h %minutes%m %seconds%s') %></strong>
+            <strong <% if project.currentlog %>data-counter="<%= project.spent %>"<% end %>><%= raw(project.spent('%hours%<small>h</small> %minutes%<small>m</small> %seconds%<small>s</small>')) %></strong>
           </td>
           <td class="hidden-xs"><%=l project.created_at %></td>
           <td class="center nowrap">
