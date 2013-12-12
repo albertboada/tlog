@@ -6,10 +6,12 @@
 
 function Counter(seconds, $element)
 {
-    var _interval = 1,
-        _$element = $element,
-        _seconds  = seconds,
-        _event    = null;
+    var _interval    = 1,
+        _$element    = $element,
+        _seconds_src = seconds,
+        _seconds     = seconds,
+        _event       = null
+        _start       = _getTimestamp();
 
     this.start = function ()
     {
@@ -25,6 +27,11 @@ function Counter(seconds, $element)
         }
     };
 
+    function _getTimestamp()
+    {
+        return Math.round(new Date().getTime() / 1000);
+    }
+
     function _refreshCounter()
     {
         var string;
@@ -38,7 +45,12 @@ function Counter(seconds, $element)
 
     function _refreshSeconds()
     {
-        _seconds += _interval;
+        var now, inc;
+
+        now = _getTimestamp();
+        inc = now - _start;
+
+        _seconds = _seconds_src + inc;
     }
 
     function _makeCounterString()
