@@ -75,7 +75,7 @@
           </td>
           <td class="important"><%= log.comment %></td>
           <td class="center">
-            <% if log.finish %>
+            <% if @project.currentlog.nil? || log != @project.currentlog %>
               <div class="btn-group btn-group-sm">
                 <%= link_to raw('<span class="glyphicon glyphicon-pencil"></span>'),
                       edit_log_path(log),
