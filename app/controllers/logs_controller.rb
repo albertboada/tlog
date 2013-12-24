@@ -14,7 +14,7 @@ class LogsController < ApplicationController
   def create
     project = Project.find(params[:id])
 
-    if project.user != current_user
+    if project.user != current_user || project.currentlog
       render :status => :forbidden, :text => "Forbidden"
     end
 
@@ -34,6 +34,10 @@ class LogsController < ApplicationController
   end
 
   def stop
+    if @log.finish
+      render :status => :forbidden, :text => "Forbidden"
+    end
+
     @log.finish = Time.now.change(:usec => 0)
 
     respond_to do |format|
