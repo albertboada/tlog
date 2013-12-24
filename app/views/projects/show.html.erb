@@ -75,7 +75,7 @@
           </td>
           <td class="important"><%= log.comment %></td>
           <td class="center">
-            <% if @project.currentlog.nil? || log != @project.currentlog %>
+            <% if log.finish %>
               <div class="btn-group btn-group-sm">
                 <%= link_to raw('<span class="glyphicon glyphicon-pencil"></span>'),
                       edit_log_path(log),
@@ -91,7 +91,7 @@
                 %>
               </div>
             <% else %>
-              <%= link_to 'I\'m done!!', stop_log_path(@project.currentlog), :method => 'post',
+              <%= link_to 'I\'m done!!', stop_log_path(log), :method => 'post',
                 :data => { :confirm => 'This action will STOP logging time for project:'+"\n"+@project.name+'.'+"\n\n"+' Are you sure?' },
                 :class => 'btn btn-warning' %>
             <% end %>
