@@ -1,19 +1,21 @@
 class Log < ActiveRecord::Base
-  default_scope :order => 'id ASC'
+  default_scope :order => 'start ASC'
+
+  validates :start, :finish, :timeliness => {:before => lambda { Time.now }}
+
+  validates :start, :finish, :overlap => {:scope => 'project_id'}
 
   belongs_to :project
 
+  #
+  #
+  #
   def spent(format = nil)
     if self.finish
       finish = self.finish
     else
       finish = Time.now
     end
-
-    puts 'Start'
-    puts self.start.to_s
-    puts 'Finish'
-    puts finish.to_s
 
     seconds_diff = (finish - start).to_f.abs.round
 
@@ -24,6 +26,9 @@ class Log < ActiveRecord::Base
     end
   end
 
+  #
+  #
+  #
   def self.format_timediff(seconds_diff, format)
     hours = seconds_diff / 3600
     seconds_diff -= hours * 3600

@@ -70,7 +70,7 @@
               <% end %>
             <% end %>
           </td>
-          <td class="nowrap"<% if @project.currentlog == log %> data-counter="<%= log.spent %>"<%end %>>
+          <td class="nowrap"<% if !log.finish %> data-counter="<%= log.spent %>"<%end %>>
             <%= log.spent '%hours%h %minutes%m %seconds%s' %>
           </td>
           <td class="important"><%= log.comment %></td>

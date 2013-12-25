@@ -61,3 +61,6 @@ gem 'twitter-bootstrap-rails', github: 'jenrzzz/twitter-bootstrap-rails', branch
 gem 'devise'
 
 gem 'jquery-rails'
+
+gem 'validates_overlap'
+gem 'validates_timeliness', '~> 3.0'

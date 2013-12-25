@@ -23,7 +23,7 @@ class LogsController < ApplicationController
     log.start   = Time.now.change(:usec => 0)
 
     respond_to do |format|
-      if log.save
+      if log.save(validate: false)
         notice = nil
         #notice = 'Log was successfully started.'
       else
@@ -41,7 +41,7 @@ class LogsController < ApplicationController
     @log.finish = Time.now.change(:usec => 0)
 
     respond_to do |format|
-      if @log.save
+      if @log.save(validate: false)
         #notice = 'Log was successfully stopped.'
         notice = nil
       else
