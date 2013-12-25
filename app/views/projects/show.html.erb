@@ -27,7 +27,10 @@
 <% else %>
   <%= link_to raw('<span class="glyphicon glyphicon-play"></span><br />Start logging now!'),
     log_path(@project), :method => 'post',
-    #:data => { :confirm => 'This action will START logging time for project:'+"\n"+@project.name+'.'+"\n\n"+' Are you sure?' },
+    :data => {
+      #:confirm => 'This action will START logging time for project:'+"\n"+@project.name+'.'+"\n\n"+' Are you sure?',
+      :'onetry' => ''
+    },
     :class => 'btn btn-success btn-epic'
   %>
 <% end %>

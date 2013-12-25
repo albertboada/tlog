@@ -1,6 +1,6 @@
 <%- model_class = Project -%>
 <div class="page-header">
-  <h1><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %> <small>Total spent: <%= raw(current_user.spent('%hours%<small>h</small> %minutes%<small>m</small> %seconds%<small>s</small>')) %></small></h1>
+  <h1><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %> <small>Overall spent: <%= raw(current_user.spent('%hours%<small>h</small> %minutes%<small>m</small> %seconds%<small>s</small>')) %></small></h1>
 </div>
 <div class="table-responsive">
   <table id="projects-table" class="table">
@@ -20,14 +20,20 @@
             <% if project.currentlog %>
               <%= link_to raw('<span class="glyphicon glyphicon-pause"></span>'),
                 stop_log_path(project.currentlog), :method => 'post',
-                :data => { :confirm => 'This action will STOP logging time for project:'+"\n"+project.name+"\n\n"+' Are you sure?' },
+                :data => {
+                  #:'onetry' => '',
+                  :confirm => 'This action will STOP logging time for project:'+"\n"+project.name+"\n\n"+' Are you sure?'
+                },
                 :class => 'btn btn-warning btn-xs',
                 :title => 'Stop logging'
               %>
             <% else %>
               <%= link_to raw('<span class="glyphicon glyphicon-play"></span>'),
                 log_path(project), :method => 'post',
-                #:data => { :confirm => 'This action will START logging time for project:'+"\n"+project.name+'.'+"\n\n"+' Are you sure?' },
+                :data => {
+                  :'onetry' => ''
+                  #:confirm => 'This action will START logging time for project:'+"\n"+project.name+'.'+"\n\n"+' Are you sure?'
+                },
                 :class => 'btn btn-success btn-xs',
                 :title => 'Start logging'
               %>

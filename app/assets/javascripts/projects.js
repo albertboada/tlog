@@ -82,6 +82,14 @@ $(function ($) {
 
         new Counter(seconds, $element).start();
     });
+
+    $("[data-onetry]").on("click", function () {
+        $(this).css("opacity", .4);
+        $(this).css("cursor", "default");
+        $(this).on("click", function (e) {
+            return false;
+        });
+    });
 });
 
 }(window, window.jQuery));
