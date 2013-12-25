@@ -27,6 +27,10 @@ $gray_color: rgb(153, 153, 153);
   white-space: normal !important;
 }
 
+small small {
+  display: inline !important;
+}
+
 // Make table-responsive cells wrap
 .table-responsive > .table {
   &> thead,

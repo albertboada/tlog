@@ -6,4 +6,17 @@ class User < ActiveRecord::Base
 
   has_many :projects
 
+  def spent(format = nil)
+    spent = 0;
+    self.projects.each_with_index do |project, i|
+      spent += project.spent;
+    end
+
+    if format
+      Log::format_timediff(spent, format)
+    else
+      spent
+    end
+  end
+
 end

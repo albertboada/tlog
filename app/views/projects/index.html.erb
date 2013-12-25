@@ -1,6 +1,6 @@
 <%- model_class = Project -%>
 <div class="page-header">
-  <h1><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>
+  <h1><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %> <small>Total spent: <%= raw(current_user.spent('%hours%<small>h</small> %minutes%<small>m</small> %seconds%<small>s</small>')) %></small></h1>
 </div>
 <div class="table-responsive">
   <table id="projects-table" class="table">
