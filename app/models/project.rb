@@ -29,6 +29,7 @@ class Project < ActiveRecord::Base
     #else
     #  nil
     #end
-    self.logs.where(:finish => nil).order(':start ASC').last
+    self.logs.where(:finish => nil).order('start ASC').last
   end
+
 end
