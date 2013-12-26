@@ -1,11 +1,20 @@
 class Log < ActiveRecord::Base
   default_scope :order => 'start ASC'
 
+  validate :valid_dates
   validates :start, :finish, :timeliness => {:before => lambda { Time.now }}
-
   validates :start, :finish, :overlap => {:scope => 'project_id'}
 
   belongs_to :project
+
+  #
+  #
+  #
+  def valid_dates
+    if self.start >= self.finish
+      self.errors.add :start_time, ' has to be after finish time'
+    end
+  end
 
   #
   #
