@@ -117,4 +117,90 @@ class Project < ActiveRecord::Base
         stats
     end
 
+    #
+    # In order to properly calculate a Project's Month Statistics, this function assumes that:
+    #     - Project's Logs are sorted by `start` date, from oldest to newest
+    #     - There is NO OVERLAPPING between Logs, which is ensured by Log model's validations
+    #
+    def monthstats
+        stats = []
+
+        curr_month                      = nil
+        curr_log                        = nil
+        start_datetime_for_curr_month   = nil # important that we keep the exact start date of each day's first log
+        total_spent_time_for_curr_month = 0
+
+        self.logs.each_with_index do |log, i|
+            curr_log = log # save log for outside the loop. when loop ends, should contain last log of all
+            log_start_month = log.start.strftime("%Y-%m")
+            puts log_start_month
+
+            if i == 0
+                curr_month = log_start_month
+                start_datetime_for_curr_month = log.start
+            end
+
+            #
+            # If day-change, add the previously fully-calculated day-stats to the
+            # `stats` array, before starting with the new-day stats calculations
+            #
+            if log_start_month != curr_month
+                _log = Log.new
+                _log.start  = start_datetime_for_curr_month
+                _log.finish = _log.start + total_spent_time_for_curr_month
+
+                stats << _log
+
+                #
+                # Init new day calculations
+                #
+                curr_month = log_start_month
+                start_datetime_for_curr_month = log.start
+                total_spent_time_for_curr_month = 0
+            end
+
+            #if date != log.finish.to_date #logs spanning more than 1 day
+            #  _time = 0
+            #  start_datetime  = log.start
+            #  finish_datetime = log.start.to_date.to_time
+            #  while finish_datetime != log.finish
+            #    _time = finish_datetime - start_datetime
+            #
+            #    _log = Log.new
+            #    _log.start  = start_datetime
+            #    _log.finish = finish_datetime
+            #
+            #    stats << _log
+            #
+            #    start_datetime  = finish_datetime
+            #    finish_datetime = finish_datetime + 1.days
+            #    if finish_datetime > log.finish
+            #      finish_datetime = log.finish
+            #    end
+            #  end
+            #else
+            total_spent_time_for_curr_month += log.spent
+            #end
+        end
+
+        last_log = curr_log
+
+        #
+        # Add the last day-stats to the `stats` array
+        #
+        if self.logs
+            _log = Log.new
+            if last_log.finish
+                _log.start  = start_datetime_for_curr_month
+                _log.finish = _log.start + total_spent_time_for_curr_month
+            else # hack if last log is still not finished so we can know the last day is still open
+                now = Time.now.change(:usec => 0)
+                _log.start  = now - total_spent_time_for_curr_month
+            end
+            stats << _log
+        end
+
+        stats
+    end
+
 end

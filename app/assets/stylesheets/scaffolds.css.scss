@@ -62,15 +62,21 @@ small small {
   min-width: 200px;
 }
 
-#log-history {
+#log-history,
+#log-stats > * {
   margin-top: 50px;
+}
 
+#log-history {
   .log-period small {
     // display: inline-block;
     // width: 35px;
     color: $gray_color;
   }
 
+  table, div.table-responsive {
+    margin-bottom: 0 !important;
+  }
 }
 
 .table .center {
