@@ -104,3 +104,25 @@
     </table>
   </div>
 </div>
+
+<div id="log-history">
+  <h3>Stats by day</h3>
+  <!-- <div class="table-responsive">
+    <table id="logs-table" class="table">
+      <thead>
+        <tr>
+          <th class="center">#</th>
+          <th>Log period</th>
+          <th>Spent time</th>
+          <th>Comment</th>
+          <th class="center">Actions</th>
+        </tr>
+      </thead>
+      -->
+      <dl class="dl-horizontal">
+        <% @project.daystats.each_with_index do |log, i| %>
+          <dt<%= !log.finish ? ' class=warning' : '' %>><%=l log.start.to_date %></dt>
+          <dd<%= !log.finish ? ' class=warning' : '' %><% if !log.finish %> data-counter="<%= log.spent %>"<%end %>><%= raw(log.spent '%hours%<small>h</small> %minutes%<small>m</small> %seconds%<small>s</small>') %></dd>
+        <% end %>
+      </dl>
+</div>
