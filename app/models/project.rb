@@ -102,7 +102,7 @@ class Project < ActiveRecord::Base
         #
         # Add the last day-stats to the `stats` array
         #
-        if self.logs
+        if last_log
             _log = Log.new
             if last_log.finish
                 _log.start  = start_datetime_for_curr_date
@@ -188,7 +188,7 @@ class Project < ActiveRecord::Base
         #
         # Add the last day-stats to the `stats` array
         #
-        if self.logs
+        if last_log
             _log = Log.new
             if last_log.finish
                 _log.start  = start_datetime_for_curr_month
