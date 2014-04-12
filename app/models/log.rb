@@ -3,7 +3,7 @@ class Log < ActiveRecord::Base
 
   validate :valid_dates
   validates :start, :finish, :timeliness => {:before => lambda { Time.now }, :before_message => 'can\'t be future'}
-  validates :start, :finish, :overlap => {:scope => 'project_id'}
+  validates :start, :finish, :overlap => {:scope => 'project_id', :message_content => ' and Finish overlap with an already existing record'}
 
   belongs_to :project
 
