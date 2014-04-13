@@ -116,6 +116,15 @@
     </dl>
   </div>
   <div class="col-md-4 col-sm-6">
+    <h3>Stats by week</h3>
+    <dl class="dl-horizontal">
+      <% @project.weekstats.each_with_index do |log, i| %>
+        <dt<%= !log.finish ? ' class=warning' : '' %>>Week <%=l log.start, format: "%V %Y" %></dt>
+        <dd<%= !log.finish ? ' class=warning' : '' %><% if !log.finish %> data-counter="<%= log.spent %>"<%end %>><%= raw(log.spent '%hours%<small>h</small> %minutes%<small>m</small> %seconds%<small>s</small>') %></dd>
+      <% end %>
+    </dl>
+  </div>
+  <div class="col-md-4 col-sm-6">
     <h3>Stats by month</h3>
     <dl class="dl-horizontal">
       <% @project.monthstats.each_with_index do |log, i| %>
